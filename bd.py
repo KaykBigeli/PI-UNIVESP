@@ -3,8 +3,8 @@ import mysql.connector
 try:
     db = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="",
+        user="4dm1n",
+        password="4dm1ndb",
         database="pi_univesp"
     )
     
@@ -17,3 +17,24 @@ try:
 
 except Exception as e:
     print(f"Algo deu errado: {e}")
+
+def adicionar_tarefa(titulo):
+    try:
+        conexao = mysql.connector.connect(host="localhost", user="root", password="", database="pi_univesp")
+        cursor = conexao.cursor()
+        
+        sql = "INSERT INTO tarefas (titulo, concluido) VALUES (%s, %s)"
+        valores = (titulo, 0) #
+        
+        cursor.execute(sql, valores)
+        conexao.commit()
+        print(f"Sucesso! Tarefa '{titulo}' adicionada.")
+        
+    except Exception as e:
+        print(f"Erro: {e}")
+    finally:
+        conexao.close()
+
+nome_tarefa = input("O que você precisa fazer? ")
+adicionar_tarefa(nome_tarefa)
+
